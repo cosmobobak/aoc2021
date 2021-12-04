@@ -3,6 +3,7 @@ use crate::get_task::get_task;
 use partition::partition_index;
 
 pub fn task3() {
+    let start = std::time::Instant::now();
     let input = get_task(3);
     let mut input = input
         .lines()
@@ -71,4 +72,5 @@ pub fn task3() {
     let co2 = flip_bits(result);
 
     println!("Task 2: {}", o2 * co2);
+    println!("done in {}us!", start.elapsed().as_micros());
 }
