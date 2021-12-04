@@ -8,6 +8,7 @@ mod task3;
 use task1::task1;
 use task2::task2;
 use task3::task3;
+use task4::task4;
 
 fn main() {
     println!("Day 1:");
@@ -16,4 +17,6 @@ fn main() {
     task2();
     println!("Day 3:");
     task3();
+    println!("Day 4:");
+    task4();
 }
