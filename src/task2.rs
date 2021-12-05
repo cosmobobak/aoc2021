@@ -3,11 +3,14 @@ use crate::get_task::get_task;
 pub fn task2() {
     let start = std::time::Instant::now();
     let input = get_task(2);
-    let instructions = input.lines().map(|string| {
-        let (instruction, value) = string.split_once(" ").unwrap();
-        let value = value.parse::<i32>().unwrap();
-        (instruction, value)
-    }).collect::<Vec<_>>();
+    let instructions = input
+        .lines()
+        .map(|string| {
+            let (instruction, value) = string.split_once(" ").unwrap();
+            let value = value.parse::<i32>().unwrap();
+            (instruction, value)
+        })
+        .collect::<Vec<_>>();
 
     // task 1
 
@@ -36,7 +39,7 @@ pub fn task2() {
             "forward" => {
                 forward += value;
                 depth += value * aim;
-            },
+            }
             "down" => aim += value,
             "up" => aim -= value,
             _ => panic!("Unknown instruction: {}", instruction),

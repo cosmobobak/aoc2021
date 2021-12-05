@@ -51,7 +51,7 @@ pub fn task3() {
         }
         bit += 1;
     };
-    
+
     // deal with the stupid way around that the bits are
     let o2 = flip_bits(result);
 
