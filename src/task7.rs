@@ -7,7 +7,6 @@ pub fn task7() {
     // io
     let input = get_task(7);
     let line = input.lines().next().unwrap();
-    let line = "16,1,2,0,4,2,7,1,2,14";
     let mut nums = line.split(',').map(|x| x.parse::<i32>().unwrap()).collect::<Vec<i32>>();
     
     // task 1
