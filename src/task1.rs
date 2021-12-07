@@ -9,11 +9,11 @@ pub fn task1() {
         .map(|x| x.parse::<i32>().unwrap())
         .collect::<Vec<i32>>();
 
-    // part 1
+    // task 1
     let sum = nums.windows(2).filter(|w| w[0] < w[1]).count();
     println!("Task 1: {}", sum);
 
-    // part 2
+    // task 2
     let windows = nums
         .windows(3)
         .map(|w| w.iter().sum())

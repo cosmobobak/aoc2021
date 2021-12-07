@@ -40,7 +40,7 @@ pub fn task5() {
         })
         .collect();
 
-    // part 1
+    // task 1
 
     let orthos = points
         .iter()
@@ -48,7 +48,7 @@ pub fn task5() {
     
     println!("Task 1: {}", count_overlaps(orthos));
 
-    // part 2
+    // task 2
 
     println!("Task 2: {}", count_overlaps(points.iter()));
 
