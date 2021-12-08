@@ -19,11 +19,18 @@ pub fn task7() {
 
     println!("Task 1: {}", dist);
     // task 2
-    let x = (nums.iter().sum::<i32>() as f64 / nums.len() as f64).round() as i32;
-    let dist = nums.iter().map(|n| {
+    let mean = nums.iter().sum::<i32>() as f64 / nums.len() as f64;
+    let x = mean.floor() as i32;
+    let y = mean.ceil() as i32;
+    let dist_lo = nums.iter().map(|n| {
         let d = (n - x).abs();
         (d * (d + 1)) / 2
     }).sum::<i32>();
+    let dist_hi = nums.iter().map(|n| {
+        let d = (n - y).abs();
+        (d * (d + 1)) / 2
+    }).sum::<i32>();
+    let dist = std::cmp::min(dist_hi, dist_lo);
 
     println!("Task 2: {}", dist);
     println!("done in {}us!", start.elapsed().as_micros());
