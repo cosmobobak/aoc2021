@@ -43,7 +43,7 @@ fn determine_positionings<'a>(inline: &'a [&str]) -> [&'a str; 10] {
                 && s != nine
                 && s != three
                 && s != five
-                && four.chars().filter(|&c| s.contains(c)).count() == 2
+                // && four.chars().filter(|&c| s.contains(c)).count() == 2
         })
         .unwrap();
 
@@ -65,38 +65,32 @@ pub fn task8() {
 
     // task 1
 
-    let mut nums = vec![0; 9];
-    for output in outputs.iter() {
-        for num in output {
-            match num.len() {
-                2 => nums[1] += 1,
-                3 => nums[7] += 1,
-                4 => nums[4] += 1,
-                7 => nums[8] += 1,
-                _ => continue,
+    let sum = outputs.iter().flat_map(|l| {
+        l.iter().map(|s| {
+            match s.len() {
+                2 | 3 | 4 | 7 => 1,
+                _ => 0,
             }
-        }
-    }
-    println!("Task 1: {}", nums.iter().sum::<usize>());
+        })
+    }).sum::<usize>();
+
+    println!("Task 1: {}", sum);
+
     // task 2
 
-    let mut sum = 0;
-    for (inline, outline) in inputs.iter().zip(outputs.iter()) {
-        let nums = determine_positionings(inline);
-        let mut value = 0;
-        println!("{:?}", outline);
-        for l in outline {
+    let sum = inputs.iter().zip(outputs.iter()).fold(0, |outer_acc, (i, o)| {
+        let nums = determine_positionings(i);
+        let value = o.iter().fold(0, |inner_acc, &l| {
             let idx = nums
                 .iter()
                 .position(|numstr| numstr.len() == l.len() && numstr.chars().all(|c| l.contains(c)))
                 .unwrap();
-            value *= 10;
-            value += idx;
-        }
-        println!("v: {}", value);
-        sum += value;
-    }
+            inner_acc * 10 + idx
+        });
+        outer_acc + value
+    });
 
     println!("Task 2: {}", sum);
+
     println!("done in {}us!", start.elapsed().as_micros());
 }
