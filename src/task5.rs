@@ -1,6 +1,8 @@
 use std::collections::HashMap;
 
-use crate::get_task::get_task;
+use crate::util::get_task;
+
+type PairCounter = ((i16, i16), i32);
 
 fn count_overlaps<'a>(points: impl Iterator<Item = &'a((i16, i16), (i16, i16))>) -> usize {
     let mut mapped_points = HashMap::new();
@@ -45,12 +47,15 @@ pub fn task5() {
     let orthos = points
         .iter()
         .filter(|(p1, p2)| p1.0 == p2.0 || p1.1 == p2.1);
+    let count = count_overlaps(orthos);
     
-    println!("Task 1: {}", count_overlaps(orthos));
+    println!("Task 1: {}", count);
 
     // task 2
-
-    println!("Task 2: {}", count_overlaps(points.iter()));
+    
+    let count = count_overlaps(points.iter());
+    
+    println!("Task 2: {}", count);
 
     println!("done in {}us!", start.elapsed().as_micros());
 }

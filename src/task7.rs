@@ -1,6 +1,4 @@
-use adqselect::nth_element;
-
-use crate::get_task::get_task;
+use crate::util::{get_task, mut_median};
 
 pub fn task7() {
     let start = std::time::Instant::now();
@@ -10,11 +8,9 @@ pub fn task7() {
     let mut nums = line.split(',').map(|x| x.parse::<i32>().unwrap()).collect::<Vec<i32>>();
     
     // task 1
-    let idx = nums.len() / 2;
-    nth_element(&mut nums, idx, &mut Ord::cmp);
-    let x = nums[idx];
+    let med = *mut_median(&mut nums);
     let dist = nums.iter().map(|n| {
-        (n - x).abs()
+        (n - med).abs()
     }).sum::<i32>();
 
     println!("Task 1: {}", dist);

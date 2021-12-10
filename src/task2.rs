@@ -1,4 +1,4 @@
-use crate::get_task::get_task;
+use crate::util::get_task;
 
 pub fn task2() {
     let start = std::time::Instant::now();

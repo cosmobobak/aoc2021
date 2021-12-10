@@ -1,4 +1,4 @@
-use crate::get_task::get_task;
+use crate::util::get_task;
 use itertools::Itertools;
 
 type Bingarr = [[usize; 5]; 5];

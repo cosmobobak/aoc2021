@@ -1,6 +1,6 @@
 use rug::Integer;
 
-use crate::get_task::get_task;
+use crate::util::get_task;
 
 fn pass(ages: &mut [Integer]) {
     for i in 0..8 {
