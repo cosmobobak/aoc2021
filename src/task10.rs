@@ -33,9 +33,9 @@ pub fn task10() {
         for brack in line.chars() {
             match brack {
                 '(' | '[' | '{' | '<' => stack.push(brack),
-                found @ (')' | ']' | '}' | '>') => {
-                    if stack.pop().map(closing) != Some(found) {
-                        sum += value(found);
+                ')' | ']' | '}' | '>' => {
+                    if stack.pop().map(closing) != Some(brack) {
+                        sum += value(brack);
                         break;
                     }
                 }
