@@ -16,7 +16,7 @@ impl Node {
     }
 }
 
-fn count_paths(graph: &[Node], from: usize, to: usize, path: &mut HashSet<usize>) -> usize {
+fn count_paths_internal(graph: &[Node], from: usize, to: usize, path: &mut HashSet<usize>) -> usize {
     if from == to { return 1; }
     let mut count = 0;
 
@@ -25,14 +25,20 @@ fn count_paths(graph: &[Node], from: usize, to: usize, path: &mut HashSet<usize>
         if path.contains(child) {
             continue;
         }
-        count += count_paths(graph, *child, to, path);
+        count += count_paths_internal(graph, *child, to, path);
     }
     if !graph[from].is_big() { path.remove(&from); }
 
     count
 }
 
-fn count_paths_with_double(graph: &[Node], from: usize, to: usize, path: &mut HashSet<usize>, double_used: Option<usize>) -> usize {
+fn count_paths(graph: &[Node]) -> usize {
+    let from = graph.iter().position(|node| node.id == *START_ID).unwrap();
+    let to = graph.iter().position(|node| node.id == *END_ID).unwrap();
+    count_paths_internal(graph, from, to, &mut HashSet::new())
+}
+
+fn count_paths_double_internal(graph: &[Node], from: usize, to: usize, path: &mut HashSet<usize>, double_used: Option<usize>) -> usize {
     // same as count_paths, except we can use a small node twice
     if from == to {
         if let Some(used) = double_used {
@@ -46,7 +52,7 @@ fn count_paths_with_double(graph: &[Node], from: usize, to: usize, path: &mut Ha
     if !graph[from].is_big() { path.insert(from); }
     for child in graph[from].children.iter() {
         if path.contains(child) { continue; }
-        count += count_paths_with_double(graph, *child, to, path, double_used);
+        count += count_paths_double_internal(graph, *child, to, path, double_used);
     }
     if !graph[from].is_big() { path.remove(&from); }
 
@@ -54,11 +60,17 @@ fn count_paths_with_double(graph: &[Node], from: usize, to: usize, path: &mut Ha
     if double_used.is_none() && !graph[from].is_big() && graph[from].id != START_ID && graph[from].id != END_ID {
         for child in graph[from].children.iter() {
             if path.contains(child) { continue; }
-            count += count_paths_with_double(graph, *child, to, path, Some(from));
+            count += count_paths_double_internal(graph, *child, to, path, Some(from));
         }
     }
 
     count
+}
+
+fn count_paths_double(graph: &[Node]) -> usize {
+    let from = graph.iter().position(|node| node.id == *START_ID).unwrap();
+    let to = graph.iter().position(|node| node.id == *END_ID).unwrap();
+    count_paths_double_internal(graph, from, to, &mut HashSet::new(), None)
 }
 
 pub fn task12() {
@@ -86,18 +98,16 @@ pub fn task12() {
         graph[to_node].children.push(from_node);
     }
     let graph = graph;
-    let start_pos = graph.iter().position(|node| node.id == *START_ID).unwrap();
-    let end_pos = graph.iter().position(|node| node.id == *END_ID).unwrap();
 
     // task 1
 
-    let count = count_paths(&graph, start_pos, end_pos, &mut HashSet::new());
+    let count = count_paths(&graph);
     
     println!("Task 1: {}", count);
 
     // task 2
     
-    let count_with_doubling = count_paths_with_double(&graph, start_pos, end_pos, &mut HashSet::new(), None);
+    let count_with_doubling = count_paths_double(&graph);
     println!("Task 2: {}", count_with_doubling);
 
     println!("done in {}us!", start.elapsed().as_micros());
