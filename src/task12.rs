@@ -16,49 +16,45 @@ impl Node {
     }
 }
 
-fn count_paths(nodes: &[Node], from: usize, to: usize, visited: &mut HashSet<usize>) -> usize {
+fn count_paths(graph: &[Node], from: usize, to: usize, path: &mut HashSet<usize>) -> usize {
     if from == to { return 1; }
     let mut count = 0;
 
-    if !nodes[from].is_big() { visited.insert(from); }
-    for child in nodes[from].children.iter() {
-        if visited.contains(child) {
+    if !graph[from].is_big() { path.insert(from); }
+    for child in graph[from].children.iter() {
+        if path.contains(child) {
             continue;
         }
-        count += count_paths(nodes, *child, to, visited);
+        count += count_paths(graph, *child, to, path);
     }
-    if !nodes[from].is_big() { visited.remove(&from); }
+    if !graph[from].is_big() { path.remove(&from); }
 
     count
 }
 
-fn count_paths_with_double(nodes: &[Node], from: usize, to: usize, visited: &mut HashSet<usize>, double_used: Option<usize>) -> usize {
+fn count_paths_with_double(graph: &[Node], from: usize, to: usize, path: &mut HashSet<usize>, double_used: Option<usize>) -> usize {
     // same as count_paths, except we can use a small node twice
     if from == to {
         if let Some(used) = double_used {
-            return visited.contains(&used) as usize;
+            return if path.contains(&used) { 1 } else { 0 };
         }
         return 1;
     }
     let mut count = 0;
 
     // first count the paths if we don't use the node twice
-    if !nodes[from].is_big() { visited.insert(from); }
-    for child in nodes[from].children.iter() {
-        if visited.contains(child) {
-            continue;
-        }
-        count += count_paths_with_double(nodes, *child, to, visited, double_used);
+    if !graph[from].is_big() { path.insert(from); }
+    for child in graph[from].children.iter() {
+        if path.contains(child) { continue; }
+        count += count_paths_with_double(graph, *child, to, path, double_used);
     }
-    if !nodes[from].is_big() { visited.remove(&from); }
+    if !graph[from].is_big() { path.remove(&from); }
 
     // then count the paths if we do use the node twice
-    if double_used.is_none() && !nodes[from].is_big() && nodes[from].id != START_ID && nodes[from].id != END_ID {
-        for child in nodes[from].children.iter() {
-            if visited.contains(child) {
-                continue;
-            }
-            count += count_paths_with_double(nodes, *child, to, visited, Some(from));
+    if double_used.is_none() && !graph[from].is_big() && graph[from].id != START_ID && graph[from].id != END_ID {
+        for child in graph[from].children.iter() {
+            if path.contains(child) { continue; }
+            count += count_paths_with_double(graph, *child, to, path, Some(from));
         }
     }
 
