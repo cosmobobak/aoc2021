@@ -73,7 +73,7 @@ pub fn task11() {
         i += 1;
     };
     
-    println!("Task 1: {}", all_iter);
+    println!("Task 2: {}", all_iter);
 
     println!("done in {}us!", start.elapsed().as_micros());
 }

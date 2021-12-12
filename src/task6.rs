@@ -3,9 +3,7 @@ use rug::Integer;
 use crate::util::get_task;
 
 fn pass(ages: &mut [Integer]) {
-    for i in 0..8 {
-        ages.swap(i, i + 1);
-    }
+    ages.rotate_left(1);
     let (left, right) = ages.split_at_mut(8);
     left[6] += &right[0];
 }
