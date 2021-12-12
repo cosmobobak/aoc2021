@@ -12,6 +12,7 @@ mod task8;
 mod task9;
 mod task10;
 mod task11;
+mod task12;
 
 use task1::task1;
 use task2::task2;
@@ -24,6 +25,7 @@ use task8::task8;
 use task9::task9;
 use task10::task10;
 use task11::task11;
+use task12::task12;
 
 fn main() {
     // println!("Day 1:");
@@ -46,6 +48,8 @@ fn main() {
     // task9();
     // println!("Day 10:");
     // task10();
-    println!("Day 11:");
-    task11();
+    // println!("Day 11:");
+    // task11();
+    println!("Day 12:");
+    task12();
 }

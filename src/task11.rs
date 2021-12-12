@@ -19,36 +19,20 @@ fn update(matrix: &mut [[u8; 10]; 10]) -> usize {
                     change_made = true;
                     changes += 1;
                     // update all adjacent cells
-                    if i > 0 {
-                        matrix[i - 1][j] += 1;
-                    }
-                    if i < 9 {
-                        matrix[i + 1][j] += 1;
-                    }
-                    if j > 0 {
-                        matrix[i][j - 1] += 1;
-                    }
-                    if j < 9 {
-                        matrix[i][j + 1] += 1;
-                    }
+                    if i > 0 { matrix[i - 1][j] += 1; }
+                    if i < 9 { matrix[i + 1][j] += 1; }
+                    if j > 0 { matrix[i][j - 1] += 1; }
+                    if j < 9 { matrix[i][j + 1] += 1; }
                     // and corners
-                    if i > 0 && j > 0 {
-                        matrix[i - 1][j - 1] += 1;
-                    }
-                    if i > 0 && j < 9 {
-                        matrix[i - 1][j + 1] += 1;
-                    }
-                    if i < 9 && j > 0 {
-                        matrix[i + 1][j - 1] += 1;
-                    }
-                    if i < 9 && j < 9 {
-                        matrix[i + 1][j + 1] += 1;
-                    }
+                    if i > 0 && j > 0 { matrix[i - 1][j - 1] += 1; }
+                    if i > 0 && j < 9 { matrix[i - 1][j + 1] += 1; }
+                    if i < 9 && j > 0 { matrix[i + 1][j - 1] += 1; }
+                    if i < 9 && j < 9 { matrix[i + 1][j + 1] += 1; }
                 }
             }
         }
     }
-    
+
     for &(i, j) in flashlocs.iter() {
         matrix[i][j] = 0;
     }
