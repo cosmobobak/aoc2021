@@ -1,6 +1,6 @@
 use crate::util::get_task;
 
-fn adjvec(lines: &[&[u8]], row: usize, col: usize) -> [u8; 4] {
+const fn adjvec(lines: &[&[u8]], row: usize, col: usize) -> [u8; 4] {
     let h = lines.len() - 1;
     let w = lines[0].len() - 1;
     [

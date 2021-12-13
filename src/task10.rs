@@ -27,7 +27,7 @@ pub fn task10() {
 
     // task 1
     let mut sum = 0;
-    for line in lines.iter() {
+    for line in &lines {
         let mut stack = Vec::with_capacity(line.len());
         for brack in line.chars() {
             match brack {

@@ -1,7 +1,6 @@
 use std::mem::MaybeUninit;
 
 use crate::util::get_task;
-use itertools::Itertools;
 
 type Bingarr = [[usize; 5]; 5];
 
@@ -53,7 +52,7 @@ pub fn task4() {
 
     'outer1: for i in 1..nums.len() {
         let marked = &nums[..i];
-        for b in bingos.iter() {
+        for b in &bingos {
             if is_bingo(b, marked) {
                 let res = unmarked_sum(b, marked) * marked.last().unwrap();
                 println!("part 1: {}", res);

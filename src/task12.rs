@@ -21,7 +21,7 @@ fn count_paths_internal(graph: &[Node], from: usize, to: usize, path: &mut HashS
     let mut count = 0;
 
     if !graph[from].is_big() { path.insert(from); }
-    for child in graph[from].children.iter() {
+    for child in &graph[from].children {
         if path.contains(child) {
             continue;
         }
@@ -50,7 +50,7 @@ fn count_paths_double_internal(graph: &[Node], from: usize, to: usize, path: &mu
 
     // first count the paths if we don't use the node twice
     if !graph[from].is_big() { path.insert(from); }
-    for child in graph[from].children.iter() {
+    for child in &graph[from].children {
         if path.contains(child) { continue; }
         count += count_paths_double_internal(graph, *child, to, path, double_used);
     }
@@ -58,7 +58,7 @@ fn count_paths_double_internal(graph: &[Node], from: usize, to: usize, path: &mu
 
     // then count the paths if we do use the node twice
     if double_used.is_none() && !graph[from].is_big() && graph[from].id != START_ID && graph[from].id != END_ID {
-        for child in graph[from].children.iter() {
+        for child in &graph[from].children {
             if path.contains(child) { continue; }
             count += count_paths_double_internal(graph, *child, to, path, Some(from));
         }
@@ -87,7 +87,7 @@ pub fn task12() {
     
     let node_ids = edges.clone().into_iter().flat_map(|(from, to)| vec![from, to]).collect::<HashSet<_>>();
     let mut graph = node_ids.into_iter().map(|id| Node { id, children: vec![] }).collect::<Vec<_>>();
-    for (from, to) in edges.iter() {
+    for (from, to) in &edges {
         let from_node = graph.iter().position(|node| node.id == *from).unwrap();
         let to_node = graph.iter().position(|node| node.id == *to).unwrap();
         graph[from_node].children.push(to_node);

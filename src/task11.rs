@@ -33,7 +33,7 @@ fn update(matrix: &mut [[u8; 10]; 10]) -> usize {
         }
     }
 
-    for &(i, j) in flashlocs.iter() {
+    for &(i, j) in &flashlocs {
         matrix[i][j] = 0;
     }
 

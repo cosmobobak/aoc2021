@@ -4,7 +4,7 @@ use crate::util::get_task;
 
 fn do_fold(points: &mut [(i32, i32)], f: (&str, i32)) {
     let (axis, value) = f;
-    points.iter_mut().for_each(|p| {
+    for p in points.iter_mut() {
         match axis {
             "x" => if p.0 > value {
                 p.0 = p.0 - (p.0 - value) * 2;
@@ -14,7 +14,7 @@ fn do_fold(points: &mut [(i32, i32)], f: (&str, i32)) {
             },
             _ => panic!("unknown axis"),
         }
-    });
+    }
 }
 
 fn print_points(points: &[(i32, i32)]) {
@@ -29,7 +29,7 @@ fn print_points(points: &[(i32, i32)]) {
     for y in 0..=max_y {
         for x in 0..=max_x {
             if points.contains(&(x, y)) {
-                print!("█");
+                print!("\u{2588}");
             } else {
                 print!(" ");
             }

@@ -16,7 +16,7 @@ pub fn task2() {
     let mut depth = 0;
     let mut forward = 0;
 
-    for (instruction, value) in instructions.iter() {
+    for (instruction, value) in &instructions {
         match *instruction {
             "forward" => forward += value,
             "down" => depth += value,
@@ -33,7 +33,7 @@ pub fn task2() {
     let mut forward = 0;
     let mut aim = 0;
 
-    for (instruction, value) in instructions.iter() {
+    for (instruction, value) in &instructions {
         match *instruction {
             "forward" => {
                 forward += value;

@@ -1,3 +1,5 @@
+#![allow(clippy::cast_possible_truncation, clippy::cast_precision_loss)]
+
 use crate::util::{get_task, mut_median};
 
 pub fn task7() {
@@ -14,7 +16,7 @@ pub fn task7() {
 
     println!("Task 1: {}", dist);
     // task 2
-    let mean = nums.iter().sum::<i32>() as f64 / nums.len() as f64;
+    let mean = f64::from(nums.iter().sum::<i32>()) / nums.len() as f64;
     let x = mean.floor() as i32;
     let y = mean.ceil() as i32;
     let dist_lo = nums.iter().map(|n| {

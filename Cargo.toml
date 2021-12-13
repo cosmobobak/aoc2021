@@ -2,6 +2,12 @@
 name = "aoc2021"
 version = "0.1.0"
 edition = "2021"
+description = "Cosmo's 2021 Advent of Code solutions"
+license = "MIT"
+repository = "https://github.com/cosmobobak/aoc2021"
+keywords = ["advent of code", "2021"]
+categories = ["games"]
+readme = "README.md"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

@@ -15,7 +15,7 @@ pub fn task3() {
     let mut val: usize = 0;
     for col in 0..12 {
         let mut sum = 0;
-        for v in input.iter() {
+        for v in &input {
             sum += (v >> col) & 1;
         }
         val <<= 1;
