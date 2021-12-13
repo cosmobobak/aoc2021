@@ -1,7 +1,6 @@
 use crate::util::get_task;
 
 pub fn task2() {
-    let start = std::time::Instant::now();
     let input = get_task(2);
     let instructions = input
         .lines()
@@ -47,5 +46,4 @@ pub fn task2() {
     }
 
     println!("Task 2: {}", forward * depth);
-    println!("done in {}us!", start.elapsed().as_micros());
 }

@@ -1,7 +1,6 @@
 use crate::util::{get_task, mut_median};
 
 pub fn task7() {
-    let start = std::time::Instant::now();
     // io
     let input = get_task(7);
     let line = input.lines().next().unwrap();
@@ -29,5 +28,4 @@ pub fn task7() {
     let dist = std::cmp::min(dist_hi, dist_lo);
 
     println!("Task 2: {}", dist);
-    println!("done in {}us!", start.elapsed().as_micros());
 }

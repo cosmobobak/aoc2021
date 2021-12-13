@@ -19,7 +19,6 @@ fn unmarked_sum(bingo: &Bingarr, marked: &[usize]) -> usize {
 }
 
 pub fn task4() {
-    let start = std::time::Instant::now();
     // io
     let input = get_task(4);
     let (l1, rest) = input.split_once("\n\n").unwrap();
@@ -34,17 +33,19 @@ pub fn task4() {
                 .map(|l| l.split_whitespace().map(|v| v.parse().unwrap()))
         })
         .map(|bingo| {
-            let mut out = unsafe { 
-                // terrible crimes!
-                #[allow(clippy::uninit_assumed_init)]
-                [[MaybeUninit::<usize>::uninit().assume_init(); 5]; 5] 
+            // Create an uninitialized array of `MaybeUninit`. The `assume_init` is
+            // safe because the type we are claiming to have initialized here is a
+            // bunch of `MaybeUninit`s, which do not require initialization.
+            let mut out: [[MaybeUninit<usize>; 5]; 5] = unsafe {
+                MaybeUninit::uninit().assume_init()
             };
             for (row, line) in bingo.enumerate() {
                 for (col, val) in line.enumerate() {
-                    out[row][col] = val;
+                    out[row][col].write(val);
                 }
             }
-            out
+            // all initialized, so we can safely convert
+            unsafe { std::mem::transmute(out) }
         })
         .collect();
 
@@ -82,6 +83,4 @@ pub fn task4() {
             }
         }
     }
-
-    println!("done in {}us!", start.elapsed().as_micros());
 }

@@ -41,7 +41,6 @@ fn update(matrix: &mut [[u8; 10]; 10]) -> usize {
 }
 
 pub fn task11() {
-    let start = std::time::Instant::now();
     // io
     let input = get_task(11);
     let mut matrix = [[0; 10]; 10];
@@ -74,6 +73,4 @@ pub fn task11() {
     };
     
     println!("Task 2: {}", all_iter);
-
-    println!("done in {}us!", start.elapsed().as_micros());
 }

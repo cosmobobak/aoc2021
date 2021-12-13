@@ -51,14 +51,13 @@ fn determine_positionings<'a>(inline: &'a [&str]) -> [&'a str; 10] {
 }
 
 pub fn task8() {
-    let start = std::time::Instant::now();
     // io
     let input = get_task(8);
-    let outputs = input.lines().map(|s| s.split(" | ").nth(1).unwrap());
+    let outputs = input.lines().map(|s| s.split_once(" | ").unwrap().1);
     let outputs = outputs
         .map(|s| s.split_whitespace().collect::<Vec<&str>>())
         .collect::<Vec<_>>();
-    let inputs = input.lines().map(|s| s.split(" | ").next().unwrap());
+    let inputs = input.lines().map(|s| s.split_once(" | ").unwrap().0);
     let inputs = inputs
         .map(|s| s.split_whitespace().collect::<Vec<&str>>())
         .collect::<Vec<_>>();
@@ -91,6 +90,4 @@ pub fn task8() {
     });
 
     println!("Task 2: {}", sum);
-
-    println!("done in {}us!", start.elapsed().as_micros());
 }

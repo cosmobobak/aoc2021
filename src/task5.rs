@@ -24,7 +24,6 @@ fn count_overlaps<'a>(points: impl Iterator<Item = &'a((i16, i16), (i16, i16))>)
 }
 
 pub fn task5() {
-    let start = std::time::Instant::now();
     // io
     let input = get_task(5);
     let points: Vec<((i16, i16), (i16, i16))> = input
@@ -51,6 +50,4 @@ pub fn task5() {
     let count = count_overlaps(points.iter());
     
     println!("Task 2: {}", count);
-
-    println!("done in {}us!", start.elapsed().as_micros());
 }

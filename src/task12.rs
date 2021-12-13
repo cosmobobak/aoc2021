@@ -74,7 +74,6 @@ fn count_paths_double(graph: &[Node]) -> usize {
 }
 
 pub fn task12() {
-    let start = std::time::Instant::now();
     // io
     let input = get_task(12);
     let edges: Vec<(&str, &str)> = input
@@ -106,6 +105,4 @@ pub fn task12() {
     
     let count_with_doubling = count_paths_double(&graph);
     println!("Task 2: {}", count_with_doubling);
-
-    println!("done in {}us!", start.elapsed().as_micros());
 }

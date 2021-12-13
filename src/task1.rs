@@ -1,7 +1,6 @@
 use crate::util::get_task;
 
 pub fn task1() {
-    let start = std::time::Instant::now();
     // io
     let input = get_task(1);
     let nums = input
@@ -20,5 +19,4 @@ pub fn task1() {
         .collect::<Vec<i32>>();
     let sum = windows.windows(2).filter(|w| w[0] < w[1]).count();
     println!("Task 2: {}", sum);
-    println!("done in {}us!", start.elapsed().as_micros());
 }

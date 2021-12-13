@@ -20,7 +20,6 @@ fn count_at_step(data: &[usize], iteration: usize) -> Integer {
 }
 
 pub fn task6() {
-    let start = std::time::Instant::now();
     // io
     let input = get_task(6);
     let data: Vec<usize> = input
@@ -39,12 +38,4 @@ pub fn task6() {
     let count = count_at_step(&data, 256);
     
     println!("Task 2: {:?}", count);
-
-    println!("done in {}us!", start.elapsed().as_micros());
-
-    // let time_for_ten_million = std::time::Instant::now();
-    // let res = count_at_step(&data, 10_000_000);
-    // let time_for_ten_million = time_for_ten_million.elapsed().as_micros();
-    // println!("{}", res);
-    // println!("done in {}us!", time_for_ten_million);
 }

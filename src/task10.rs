@@ -21,7 +21,6 @@ fn closing(c: char) -> char {
 }
 
 pub fn task10() {
-    let start = std::time::Instant::now();
     // io
     let input = get_task(10);
     let lines = input.lines().collect::<Vec<&str>>();
@@ -85,6 +84,4 @@ pub fn task10() {
     let med = *mut_median(&mut vals);
 
     println!("Task 2: {}", med);
-
-    println!("done in {}us!", start.elapsed().as_micros());
 }

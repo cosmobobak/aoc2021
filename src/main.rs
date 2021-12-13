@@ -29,33 +29,35 @@ use task11::task11;
 use task12::task12;
 use task13::task13;
 
-fn main() {
+static mut DAY_COUNTER: i32 = 1;
+
+fn run(day: impl FnOnce()) -> u128 {
+    println!("Day {}:", unsafe { DAY_COUNTER });
+    unsafe { DAY_COUNTER += 1 };
     let start = std::time::Instant::now();
-    println!("Day 1:");
-    task1();
-    println!("Day 2:");
-    task2();
-    println!("Day 3:");
-    task3();
-    println!("Day 4:");
-    task4();
-    println!("Day 5:");
-    task5();
-    println!("Day 6:");
-    task6();
-    println!("Day 7:");
-    task7();
-    println!("Day 8:");
-    task8();
-    println!("Day 9:");
-    task9();
-    println!("Day 10:");
-    task10();
-    println!("Day 11:");
-    task11();
-    println!("Day 12:");
-    task12();
-    println!("Day 13:");
-    task13();
+    day();
+    start.elapsed().as_millis()
+}
+
+fn main() {
+    let mut timings = Vec::new();
+    let start = std::time::Instant::now();
+    timings.push(run(task1));
+    timings.push(run(task2));
+    timings.push(run(task3));
+    timings.push(run(task4));
+    timings.push(run(task5));
+    timings.push(run(task6));
+    timings.push(run(task7));
+    timings.push(run(task8));
+    timings.push(run(task9));
+    timings.push(run(task10));
+    timings.push(run(task11));
+    timings.push(run(task12));
+    timings.push(run(task13));
     println!("Total time for all days: {}ms", start.elapsed().as_millis());
+    println!("Timings:");
+    for (i, timing) in timings.iter().enumerate() {
+        println!("Day {}: {}ms", i + 1, timing);
+    }
 }

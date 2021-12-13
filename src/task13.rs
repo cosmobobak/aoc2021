@@ -39,7 +39,6 @@ fn print_points(points: &[(i32, i32)]) {
 }
 
 pub fn task13() {
-    let start = std::time::Instant::now();
     // io
     let input = get_task(13);
     let (point_text, fold_text) = input.split_once("\n\n").unwrap();
@@ -65,7 +64,7 @@ pub fn task13() {
     
     let f = folds.next().unwrap();
     do_fold(&mut points, f);
-    let unique_points = points.iter().collect::<HashSet<_>>();
+    let unique_points = points.iter().copied().collect::<HashSet<_>>();
 
     println!("Task 1: {}", unique_points.len());
 
@@ -77,6 +76,4 @@ pub fn task13() {
 
     println!("Task 2:");
     print_points(&points);
-
-    println!("done in {}us!", start.elapsed().as_micros());
 }
