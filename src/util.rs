@@ -7,7 +7,9 @@ pub fn get_task(task_id: usize) -> String {
     }
 }
 
-pub fn mut_median<T: Ord>(s: &mut [T]) -> &mut T {
+pub fn median_element<T: Ord>(s: &mut [T]) -> &mut T {
+    // mutates the input slice in order to find
+    // the median element in O(n) time
     let idx = s.len() / 2;
     nth_element(s, idx, &mut Ord::cmp);
     &mut s[idx]

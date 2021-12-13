@@ -1,4 +1,4 @@
-use crate::util::{get_task, mut_median};
+use crate::util::{get_task, median_element};
 
 fn value(c: char) -> i32 {
     match c {
@@ -81,7 +81,7 @@ pub fn task10() {
             }
         })
     }).collect::<Vec<u64>>();
-    let med = *mut_median(&mut vals);
+    let med = *median_element(&mut vals);
 
     println!("Task 2: {}", med);
 }

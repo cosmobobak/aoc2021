@@ -1,6 +1,6 @@
 #![allow(clippy::cast_possible_truncation, clippy::cast_precision_loss)]
 
-use crate::util::{get_task, mut_median};
+use crate::util::{get_task, median_element};
 
 pub fn task7() {
     // io
@@ -9,7 +9,7 @@ pub fn task7() {
     let mut nums = line.split(',').map(|x| x.parse::<i32>().unwrap()).collect::<Vec<i32>>();
     
     // task 1
-    let med = *mut_median(&mut nums);
+    let med = *median_element(&mut nums);
     let dist = nums.iter().map(|n| {
         (n - med).abs()
     }).sum::<i32>();
