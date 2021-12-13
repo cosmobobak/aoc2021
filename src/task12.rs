@@ -5,12 +5,12 @@ use crate::util::get_task;
 const START_ID: &str = "start";
 const END_ID: &str = "end";
 
-struct Node {
-    id: String,
+struct Node<'a> {
+    id: &'a str,
     children: Vec<usize>,
 }
 
-impl Node {
+impl Node<'_> {
     fn is_big(&self) -> bool {
         self.id.chars().all(char::is_uppercase)
     }
@@ -33,8 +33,8 @@ fn count_paths_internal(graph: &[Node], from: usize, to: usize, path: &mut HashS
 }
 
 fn count_paths(graph: &[Node]) -> usize {
-    let from = graph.iter().position(|node| node.id == *START_ID).unwrap();
-    let to = graph.iter().position(|node| node.id == *END_ID).unwrap();
+    let from = graph.iter().position(|node| *node.id == *START_ID).unwrap();
+    let to = graph.iter().position(|node| *node.id == *END_ID).unwrap();
     count_paths_internal(graph, from, to, &mut HashSet::new())
 }
 
@@ -68,8 +68,8 @@ fn count_paths_double_internal(graph: &[Node], from: usize, to: usize, path: &mu
 }
 
 fn count_paths_double(graph: &[Node]) -> usize {
-    let from = graph.iter().position(|node| node.id == *START_ID).unwrap();
-    let to = graph.iter().position(|node| node.id == *END_ID).unwrap();
+    let from = graph.iter().position(|node| *node.id == *START_ID).unwrap();
+    let to = graph.iter().position(|node| *node.id == *END_ID).unwrap();
     count_paths_double_internal(graph, from, to, &mut HashSet::new(), None)
 }
 
@@ -77,13 +77,10 @@ pub fn task12() {
     let start = std::time::Instant::now();
     // io
     let input = get_task(12);
-    let edges: Vec<(String, String)> = input
+    let edges: Vec<(&str, &str)> = input
         .lines()
         .map(|line| {
-            let mut parts = line.split('-');
-            let from = parts.next().unwrap().to_string();
-            let to = parts.next().unwrap().to_string();
-            (from, to)
+            line.split_once('-').unwrap()
         })
         .collect();
 

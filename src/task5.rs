@@ -30,15 +30,10 @@ pub fn task5() {
     let points: Vec<((i16, i16), (i16, i16))> = input
         .lines()
         .map(|line| {
-            let mut ps = line.split(" -> ").map(|p| {
-                let mut p = p.split(',');
-                let x = p.next().unwrap().parse::<i16>().unwrap();
-                let y = p.next().unwrap().parse::<i16>().unwrap();
-                (x, y)
-            });
-            let p1 = ps.next().unwrap();
-            let p2 = ps.next().unwrap();
-            (p1, p2)
+            let (left_point, right_point) = line.split_once(" -> ").unwrap();
+            let (x1, y1) = left_point.split_once(',').map(|(l, r)| (l.parse().unwrap(), r.parse().unwrap())).unwrap();
+            let (x2, y2) = right_point.split_once(',').map(|(l, r)| (l.parse().unwrap(), r.parse().unwrap())).unwrap();
+            ((x1, y1), (x2, y2))
         })
         .collect();
 

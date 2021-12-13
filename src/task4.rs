@@ -1,3 +1,5 @@
+use std::mem::MaybeUninit;
+
 use crate::util::get_task;
 use itertools::Itertools;
 
@@ -20,23 +22,23 @@ pub fn task4() {
     let start = std::time::Instant::now();
     // io
     let input = get_task(4);
-    let mut lines = input.lines();
-    let nums: Vec<usize> = lines
-        .next()
-        .unwrap()
+    let (l1, rest) = input.split_once("\n\n").unwrap();
+    let nums: Vec<usize> = l1
         .split(',')
         .map(|v| v.parse().unwrap())
         .collect();
-    lines.next();
-    let chunks = lines.chunks(6);
-    let bingos: Vec<[[usize; 5]; 5]> = chunks
-        .into_iter()
+        
+    let bingos: Vec<[[usize; 5]; 5]> = rest.split("\n\n")
         .map(|chnk| {
-            chnk.take(5)
+            chnk.lines()
                 .map(|l| l.split_whitespace().map(|v| v.parse().unwrap()))
         })
         .map(|bingo| {
-            let mut out = [[0; 5]; 5];
+            let mut out = unsafe { 
+                // terrible crimes!
+                #[allow(clippy::uninit_assumed_init)]
+                [[MaybeUninit::<usize>::uninit().assume_init(); 5]; 5] 
+            };
             for (row, line) in bingo.enumerate() {
                 for (col, val) in line.enumerate() {
                     out[row][col] = val;
