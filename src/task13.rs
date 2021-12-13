@@ -2,7 +2,7 @@ use std::collections::HashSet;
 
 use crate::util::get_task;
 
-fn do_fold(points: &mut Vec<(i32, i32)>, f: (&str, i32)) {
+fn do_fold(points: &mut [(i32, i32)], f: (&str, i32)) {
     let (axis, value) = f;
     points.iter_mut().for_each(|p| {
         match axis {
