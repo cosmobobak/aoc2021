@@ -19,6 +19,7 @@ mod task10;
 mod task11;
 mod task12;
 mod task13;
+mod task14;
 
 use task1::task1;
 use task2::task2;
@@ -33,6 +34,7 @@ use task10::task10;
 use task11::task11;
 use task12::task12;
 use task13::task13;
+use task14::task14;
 
 static mut DAY_COUNTER: i32 = 1;
 
@@ -45,7 +47,7 @@ fn run(day: impl FnOnce()) -> u128 {
 }
 
 fn main() {
-    let mut timings = Vec::new();
+    let mut timings = Vec::with_capacity(25);
     let start = std::time::Instant::now();
     timings.push(run(task1));
     timings.push(run(task2));
@@ -60,6 +62,7 @@ fn main() {
     timings.push(run(task11));
     timings.push(run(task12));
     timings.push(run(task13));
+    timings.push(run(task14));
     println!("Total time for all days: {}ms", start.elapsed().as_millis());
     println!("Timings:");
     for (i, timing) in timings.iter().enumerate() {
