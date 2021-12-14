@@ -6,28 +6,28 @@ pub fn task7() {
     // io
     let input = get_task(7);
     let line = input.lines().next().unwrap();
-    let mut nums = line.split(',').map(|x| x.parse::<i32>().unwrap()).collect::<Vec<i32>>();
+    let mut crab_positions: Vec<i32> = line.split(',').map(|x| x.parse().unwrap()).collect();
     
     // task 1
-    let med = *median_element(&mut nums);
-    let dist = nums.iter().map(|n| {
-        (n - med).abs()
+    let chosen_location = *median_element(&mut crab_positions);
+    let fuel_cost = crab_positions.iter().map(|n| {
+        (n - chosen_location).abs()
     }).sum::<i32>();
 
-    println!("Task 1: {}", dist);
+    println!("Task 1: {}", fuel_cost);
     // task 2
-    let mean = f64::from(nums.iter().sum::<i32>()) / nums.len() as f64;
+    let mean = f64::from(crab_positions.iter().sum::<i32>()) / crab_positions.len() as f64;
     let x = mean.floor() as i32;
     let y = mean.ceil() as i32;
-    let dist_lo = nums.iter().map(|n| {
+    let dist_lo = crab_positions.iter().map(|n| {
         let d = (n - x).abs();
         (d * (d + 1)) / 2
     }).sum::<i32>();
-    let dist_hi = nums.iter().map(|n| {
+    let dist_hi = crab_positions.iter().map(|n| {
         let d = (n - y).abs();
         (d * (d + 1)) / 2
     }).sum::<i32>();
-    let dist = std::cmp::min(dist_hi, dist_lo);
+    let fuel_cost = std::cmp::min(dist_hi, dist_lo);
 
-    println!("Task 2: {}", dist);
+    println!("Task 2: {}", fuel_cost);
 }

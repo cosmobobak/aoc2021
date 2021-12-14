@@ -4,7 +4,7 @@ use crate::util::get_task;
 
 fn pass(str: &mut HashMap<(char, char), u64>, counts: &mut HashMap<char, u64>, rules: &HashMap<(char, char), char>) {
     let mut new_entries = Vec::with_capacity(20);
-    for ((a, b), c) in rules.iter() {
+    for ((a, b), c) in rules {
         if let Some(count) = str.remove(&(*a, *b)) {
             new_entries.push(((*a, *c), count));
             new_entries.push(((*c, *b), count));
