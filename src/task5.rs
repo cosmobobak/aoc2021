@@ -14,7 +14,8 @@ fn count_overlaps<'a>(points: impl Iterator<Item = &'a((i16, i16), (i16, i16))>)
         };
         for i in 0..num_points {
             let p = (p1.0 + i * dx, p1.1 + i * dy);
-            mapped_points.insert(p, mapped_points.get(&p).unwrap_or(&0) + 1);
+            // inc count
+            mapped_points.entry(p).and_modify(|e| *e += 1).or_insert(1);
         }
     }
 
