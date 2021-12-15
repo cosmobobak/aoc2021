@@ -6,35 +6,39 @@
 )]
 
 mod util;
-mod task1;
-mod task2;
-mod task3;
-mod task4;
-mod task5;
-mod task6;
-mod task7;
-mod task8;
-mod task9;
+mod task01;
+mod task02;
+mod task03;
+mod task04;
+mod task05;
+mod task06;
+mod task07;
+mod task08;
+mod task09;
 mod task10;
 mod task11;
 mod task12;
 mod task13;
 mod task14;
+mod task15;
 
-use task1::task1;
-use task2::task2;
-use task3::task3;
-use task4::task4;
-use task5::task5;
-use task6::task6;
-use task7::task7;
-use task8::task8;
-use task9::task9;
+use task01::task01;
+use task02::task02;
+use task03::task03;
+use task04::task04;
+use task05::task05;
+use task06::task06;
+use task07::task07;
+use task08::task08;
+use task09::task09;
 use task10::task10;
 use task11::task11;
 use task12::task12;
 use task13::task13;
 use task14::task14;
+use task15::task15;
+
+use rayon::prelude::*;
 
 static mut DAY_COUNTER: i32 = 1;
 
@@ -46,26 +50,33 @@ fn run(day: impl FnOnce()) -> u128 {
     start.elapsed().as_millis()
 }
 
+const TASKS: [fn(); 15] = [
+    task01,
+    task02,
+    task03,
+    task04,
+    task05,
+    task06,
+    task07,
+    task08,
+    task09,
+    task10,
+    task11,
+    task12,
+    task13,
+    task14,
+    task15,
+];
+
 fn main() {
-    let mut timings = Vec::with_capacity(25);
+    let mut timings = [0; TASKS.len()];
     let start = std::time::Instant::now();
-    timings.push(run(task1));
-    timings.push(run(task2));
-    timings.push(run(task3));
-    timings.push(run(task4));
-    timings.push(run(task5));
-    timings.push(run(task6));
-    timings.push(run(task7));
-    timings.push(run(task8));
-    timings.push(run(task9));
-    timings.push(run(task10));
-    timings.push(run(task11));
-    timings.push(run(task12));
-    timings.push(run(task13));
-    timings.push(run(task14));
+    for (i, task) in TASKS.iter().enumerate() {
+        timings[i] = run(task);
+    }
     println!("Total time for all days: {}ms", start.elapsed().as_millis());
     println!("Timings:");
     for (i, timing) in timings.iter().enumerate() {
-        println!("Day {}: {}ms", i + 1, timing);
+        println!("Day {:02}: {}ms", i + 1, timing);
     }
 }

@@ -19,7 +19,7 @@ fn count_at_step(data: &[usize], iteration: usize) -> Integer {
     ages.iter().sum()
 }
 
-pub fn task6() {
+pub fn task06() {
     // io
     let input = get_task(6);
     let data: Vec<usize> = input

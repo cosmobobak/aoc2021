@@ -2,7 +2,7 @@ use crate::util::get_task;
 
 use partition::partition_index;
 
-pub fn task3() {
+pub fn task03() {
     let input = get_task(3);
     let mut input = input
         .lines()

@@ -1,6 +1,6 @@
 use crate::util::get_task;
 
-pub fn task1() {
+pub fn task01() {
     // io
     let input = get_task(1);
     let nums = input

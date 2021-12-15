@@ -1,6 +1,6 @@
 use crate::util::get_task;
 
-pub fn task2() {
+pub fn task02() {
     let input = get_task(2);
     let instructions = input
         .lines()

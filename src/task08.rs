@@ -50,7 +50,7 @@ fn determine_positionings<'a>(inline: &'a [&str]) -> [&'a str; 10] {
     [zero, one, two, three, four, five, six, seven, eight, nine]
 }
 
-pub fn task8() {
+pub fn task08() {
     // io
     let input = get_task(8);
     let outputs = input.lines().map(|s| s.split_once(" | ").unwrap().1);

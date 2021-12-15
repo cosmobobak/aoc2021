@@ -35,7 +35,7 @@ fn basin_size(lines: &[&[u8]], row: usize, col: usize, seen: &mut Vec<(usize, us
     acc
 }
 
-pub fn task9() {
+pub fn task09() {
     // io
     let input = get_task(9);
     let lines = input.lines().map(str::as_bytes).collect::<Vec<_>>();

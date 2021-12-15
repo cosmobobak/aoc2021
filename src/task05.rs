@@ -22,7 +22,7 @@ fn count_overlaps<'a>(points: impl Iterator<Item = &'a((i16, i16), (i16, i16))>)
     mapped_points.values().filter(|&x| *x > 1).count()
 }
 
-pub fn task5() {
+pub fn task05() {
     // io
     let input = get_task(5);
     let points: Vec<((i16, i16), (i16, i16))> = input

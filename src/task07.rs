@@ -2,7 +2,7 @@
 
 use crate::util::{get_task, median_element};
 
-pub fn task7() {
+pub fn task07() {
     // io
     let input = get_task(7);
     let line = input.lines().next().unwrap();

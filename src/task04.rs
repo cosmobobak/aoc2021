@@ -17,7 +17,7 @@ fn unmarked_sum(bingo: &Bingarr, marked: &[usize]) -> usize {
         .sum()
 }
 
-pub fn task4() {
+pub fn task04() {
     // io
     let input = get_task(4);
     let (l1, rest) = input.split_once("\n\n").unwrap();
