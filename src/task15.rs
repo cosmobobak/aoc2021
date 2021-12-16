@@ -36,6 +36,7 @@ fn dijkstra(graph: &[Vec<u8>], start: Point, end: Point) -> u64 {
 
     while !pq.is_empty() {
         let (u, _) = pq.pop().unwrap();
+        if u == end { return dist[&u]; }
         let neighbours = get_neighbors(u, width, height);
         for v in neighbours {
             let alt = dist[&u] + u64::from(graph[v.0][v.1]);

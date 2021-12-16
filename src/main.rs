@@ -21,6 +21,7 @@ mod task12;
 mod task13;
 mod task14;
 mod task15;
+mod task16;
 
 use task01::task01;
 use task02::task02;
@@ -37,8 +38,7 @@ use task12::task12;
 use task13::task13;
 use task14::task14;
 use task15::task15;
-
-use rayon::prelude::*;
+use task16::task16;
 
 static mut DAY_COUNTER: i32 = 1;
 
@@ -50,7 +50,7 @@ fn run(day: impl FnOnce()) -> u128 {
     start.elapsed().as_millis()
 }
 
-const TASKS: [fn(); 15] = [
+const TASKS: [fn(); 16] = [
     task01,
     task02,
     task03,
@@ -66,6 +66,7 @@ const TASKS: [fn(); 15] = [
     task13,
     task14,
     task15,
+    task16,
 ];
 
 fn main() {
