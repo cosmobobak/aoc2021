@@ -19,7 +19,7 @@ enum Payload {
 #[derive(Debug, PartialEq, Eq, Clone)]
 struct Packet {
     version: u64,
-    packet_type: u64,
+    tag: u64,
     payload: Payload,
 }
 
@@ -35,11 +35,11 @@ fn read_packet(data: &[u8], mut offset: usize) -> (usize, Packet) {
     offset += 3;
 
     let packet_type_bits = &data[offset..offset + 3];
-    let packet_type = bslice_to_u64(packet_type_bits);
+    let tag = bslice_to_u64(packet_type_bits);
 
     offset += 3;
 
-    if packet_type == 4 {
+    if tag == 4 {
         let mut literal = Vec::new();
         loop {
             let block = &data[offset..offset + 5];
@@ -49,7 +49,7 @@ fn read_packet(data: &[u8], mut offset: usize) -> (usize, Packet) {
             if block[0] == b'0' {
                 break (offset, Packet {
                     version,
-                    packet_type,
+                    tag,
                     payload: Payload::Literal(bslice_to_u64(&literal)),
                 });
             }
@@ -83,62 +83,33 @@ fn read_packet(data: &[u8], mut offset: usize) -> (usize, Packet) {
 
         (offset, Packet {
             version,
-            packet_type,
+            tag,
             payload: Payload::Subpackets(subpackets),
         })
     }
 }
 
-fn part1(bitstring: &[u8]) -> u64 {
-    let mut packets = vec![read_packet(bitstring, 0).1];
-    let mut version_sum = 0;
-    
-    while !packets.is_empty() {
-        let packet = packets.remove(0);
-        version_sum += packet.version;
+fn sum_versions(p: &Packet) -> u64 {
+    match &p.payload {
+        Payload::Literal(_) => p.version,
+        Payload::Subpackets(subpackets) => subpackets.iter().map(sum_versions).sum::<u64>() + p.version,
+    }
+}
 
-        match packet.payload {
-            Payload::Literal(_) => {
-                continue;
-            },
-            Payload::Subpackets(subpackets) => {
-                packets.extend(subpackets.into_iter());
-            },
+fn eval_expr(packet: &Packet) -> u64 {
+    match &packet.payload {
+        Payload::Literal(literal) => *literal,
+        Payload::Subpackets(subpackets) => match packet.tag {
+            0 => subpackets.iter().map(eval_expr).sum(),
+            1 => subpackets.iter().map(eval_expr).product(),
+            2 => subpackets.iter().map(eval_expr).min().unwrap(),
+            3 => subpackets.iter().map(eval_expr).max().unwrap(),
+            5 => (eval_expr(&subpackets[0]) > eval_expr(&subpackets[1])) as u64,
+            6 => (eval_expr(&subpackets[0]) < eval_expr(&subpackets[1])) as u64,
+            7 => (eval_expr(&subpackets[0]) == eval_expr(&subpackets[1])) as u64,
+            _ => panic!("unknown packet type"),
         }
     }
-
-    version_sum
-}
-
-fn eval_packet(packet: &Packet) -> u64 {
-    match &packet.payload {
-        Payload::Literal(literal) => {
-            *literal
-        },
-        Payload::Subpackets(subpackets) => {
-            match packet.packet_type {
-                0 => subpackets.iter().fold(0, |acc, p| acc + eval_packet(p)),
-                1 => subpackets.iter().fold(1, |acc, p| acc * eval_packet(p)),
-                2 => subpackets.iter().map(eval_packet).min().unwrap(),
-                3 => subpackets.iter().map(eval_packet).max().unwrap(),
-                5 => {
-                    if eval_packet(&subpackets[0]) > eval_packet(&subpackets[1]) { 1 } else { 0 }
-                }
-                6 => {
-                    if eval_packet(&subpackets[0]) < eval_packet(&subpackets[1]) { 1 } else { 0 }
-                }
-                7 => {
-                    if eval_packet(&subpackets[0]) == eval_packet(&subpackets[1]) { 1 } else { 0 }
-                }
-                _ => panic!("unknown packet type"),
-            }
-        },
-    }
-}
-
-fn part2(bitstring: &[u8]) -> u64 {
-    let packet = read_packet(bitstring, 0).1;
-    eval_packet(&packet)
 }
 
 pub fn task16() {
@@ -150,11 +121,13 @@ pub fn task16() {
     }).collect::<String>();
     let data = bits.as_bytes();
 
+    let (_, root_packet) = read_packet(data, 0);
+
     // task 1
 
-    println!("Task 1: {}", part1(data));
+    println!("Task 1: {}", sum_versions(&root_packet));
 
     // task 2
     
-    println!("Task 2: {}", part2(data));
+    println!("Task 2: {}", eval_expr(&root_packet));
 }
