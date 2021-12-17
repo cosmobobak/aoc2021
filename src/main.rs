@@ -22,6 +22,8 @@ mod task13;
 mod task14;
 mod task15;
 mod task16;
+mod task17;
+mod task18;
 
 use task01::task01;
 use task02::task02;
@@ -39,6 +41,8 @@ use task13::task13;
 use task14::task14;
 use task15::task15;
 use task16::task16;
+use task17::task17;
+use task18::task18;
 
 static mut DAY_COUNTER: i32 = 1;
 
@@ -50,7 +54,7 @@ fn run(day: impl FnOnce()) -> u128 {
     start.elapsed().as_millis()
 }
 
-const TASKS: [fn(); 16] = [
+const TASKS: [fn(); 18] = [
     task01,
     task02,
     task03,
@@ -67,12 +71,14 @@ const TASKS: [fn(); 16] = [
     task14,
     task15,
     task16,
+    task17,
+    task18,
 ];
 
 fn main() {
     let mut timings = [0; TASKS.len()];
     let start = std::time::Instant::now();
-    for (i, task) in TASKS.iter().enumerate() {
+    for (i, task) in TASKS.iter().enumerate().skip(16) {
         timings[i] = run(task);
     }
     println!("Total time for all days: {}ms", start.elapsed().as_millis());
