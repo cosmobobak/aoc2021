@@ -47,7 +47,7 @@ use task18::task18;
 use task19::task19;
 
 fn run(day: usize, task: impl FnOnce()) -> u128 {
-    println!("Day {}:", day);
+    println!("Day {}:", day + 1);
     let start = std::time::Instant::now();
     task();
     start.elapsed().as_millis()
@@ -78,7 +78,7 @@ const TASKS: [fn(); 19] = [
 fn main() {
     let mut timings = [0; TASKS.len()];
     let start = std::time::Instant::now();
-    for (i, task) in TASKS.iter().enumerate().skip(18) {
+    for (i, task) in TASKS.iter().enumerate() {
         timings[i] = run(i, task);
     }
     println!("Total time for all days: {}ms", start.elapsed().as_millis());

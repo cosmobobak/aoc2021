@@ -55,7 +55,7 @@ pub fn task04() {
         for b in &bingos {
             if is_bingo(b, marked) {
                 let res = unmarked_sum(b, marked) * marked.last().unwrap();
-                println!("part 1: {}", res);
+                println!("Task 1: {}", res);
                 break 'outer1;
             }
         }
@@ -77,7 +77,7 @@ pub fn task04() {
             }
             if count == bingos.len() {
                 let res = unmarked_sum(b, marked) * marked.last().unwrap();
-                println!("part 2: {}", res);
+                println!("Task 2: {}", res);
                 break 'outer2;
             }
         }
