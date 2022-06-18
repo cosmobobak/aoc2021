@@ -5,7 +5,7 @@ pub fn task02() {
     let instructions = input
         .lines()
         .map(|string| {
-            let (instruction, value) = string.split_once(" ").unwrap();
+            let (instruction, value) = string.split_once(' ').unwrap();
             let value = value.parse::<i32>().unwrap();
             (instruction, value)
         })

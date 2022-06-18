@@ -2,7 +2,7 @@ use crate::util::get_task;
 
 pub fn task19() {
     // io
-    let input = get_task(19);
+    let _input = get_task(19);
     
 
     // task 1

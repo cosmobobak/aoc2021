@@ -42,7 +42,7 @@ pub fn task03() {
     let mut bit = 0;
     let result = loop {
         let bcount = codes.iter().fold(0, |acc, x| acc + ((x >> bit) & 1));
-        let most_common = (bcount * 2 >= codes.len()) as usize;
+        let most_common = usize::from(bcount * 2 >= codes.len());
         let idx = partition_index(codes, |x| ((x >> bit) & 1) == most_common);
         codes = codes.split_at_mut(idx).0;
         if let [x] = codes {
@@ -58,7 +58,7 @@ pub fn task03() {
     let mut bit = 0;
     let result = loop {
         let bcount = codes.iter().fold(0, |acc, x| acc + ((x >> bit) & 1));
-        let least_common = (bcount * 2 < codes.len()) as usize;
+        let least_common = usize::from(bcount * 2 < codes.len());
         let idx = partition_index(codes, |x| ((x >> bit) & 1) == least_common);
         codes = codes.split_at_mut(idx).0;
         if let [x] = codes {

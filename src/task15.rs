@@ -4,13 +4,26 @@ use priority_queue::PriorityQueue;
 
 use crate::util::get_task;
 
-type Point = (usize, usize);
+type Point = (usize, usize); // x, y
+
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+enum Dir {
+    Up,
+    Down,
+    Left,
+    Right,
+    None
+}
 
 struct NeighbourIter {
     loc: Point,
-    dir: usize,
+    dir: Dir,
     width: usize,
     height: usize,
+}
+
+struct DebugWrapper {
+    inner: NeighbourIter,
 }
 
 impl Iterator for NeighbourIter {
@@ -18,26 +31,38 @@ impl Iterator for NeighbourIter {
 
     fn next(&mut self) -> Option<Self::Item> {
         match self.dir {
-            0 => {
-                self.dir += 1;
+            Dir::Left => {
+                self.dir = Dir::Up;
                 if self.loc.0 > 0 { return Some((self.loc.0 - 1, self.loc.1)); };
                 self.next()
             }
-            1 => {
-                self.dir += 1;
+            Dir::Up => {
+                self.dir = Dir::Right;
                 if self.loc.1 > 0 { return Some((self.loc.0, self.loc.1 - 1)); };
                 self.next()
             }
-            2 => {
-                self.dir += 1;
+            Dir::Right => {
+                self.dir = Dir::Down;
                 if self.loc.0 < self.width - 1 { return Some((self.loc.0 + 1, self.loc.1)); };
                 self.next()
             }
-            _ => {
+            Dir::Down => {
+                self.dir = Dir::None;
                 if self.loc.1 < self.height - 1 { return Some((self.loc.0, self.loc.1 + 1)); };
                 None
             }
+            Dir::None => None,
         }
+    }
+}
+
+impl Iterator for DebugWrapper {
+    type Item = Point;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        let item = self.inner.next();
+        if let Some(item) = item { println!("{:?}", item); }
+        item
     }
 }
 
@@ -46,7 +71,7 @@ const fn neighbours(loc: Point, width: usize, height: usize) -> NeighbourIter {
         width,
         height,
         loc,
-        dir: 0,
+        dir: Dir::Left,
     }
 }
 

@@ -40,8 +40,8 @@ impl Neg for Side {
 
     fn neg(self) -> Self {
         match self {
-            Side::Left => Self::Right,
-            Side::Right => Self::Left,
+            Self::Left => Self::Right,
+            Self::Right => Self::Left,
         }
     }
 }
