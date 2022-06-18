@@ -6,14 +6,50 @@ use crate::util::get_task;
 
 type Point = (usize, usize);
 
-fn get_neighbors(loc: Point, width: usize, height: usize) -> Vec<Point> {
-    let mut neighbors = Vec::new();
-    if loc.0 > 0 { neighbors.push((loc.0 - 1, loc.1)); }
-    if loc.1 > 0 { neighbors.push((loc.0, loc.1 - 1)); }
-    if loc.0 < width - 1 { neighbors.push((loc.0 + 1, loc.1)); }
-    if loc.1 < height - 1 { neighbors.push((loc.0, loc.1 + 1)); }
-    neighbors
+struct NeighbourIter {
+    loc: Point,
+    dir: usize,
+    width: usize,
+    height: usize,
 }
+
+impl Iterator for NeighbourIter {
+    type Item = Point;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        match self.dir {
+            0 => {
+                self.dir += 1;
+                if self.loc.0 > 0 { return Some((self.loc.0 - 1, self.loc.1)); };
+                self.next()
+            }
+            1 => {
+                self.dir += 1;
+                if self.loc.1 > 0 { return Some((self.loc.0, self.loc.1 - 1)); };
+                self.next()
+            }
+            2 => {
+                self.dir += 1;
+                if self.loc.0 < self.width - 1 { return Some((self.loc.0 + 1, self.loc.1)); };
+                self.next()
+            }
+            _ => {
+                if self.loc.1 < self.height - 1 { return Some((self.loc.0, self.loc.1 + 1)); };
+                None
+            }
+        }
+    }
+}
+
+const fn neighbours(loc: Point, width: usize, height: usize) -> NeighbourIter {
+    NeighbourIter {
+        width,
+        height,
+        loc,
+        dir: 0,
+    }
+}
+
 
 fn dijkstra(graph: &[Vec<u8>], start: Point, end: Point) -> u64 {
     // https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm#Using_a_priority_queue
@@ -34,11 +70,9 @@ fn dijkstra(graph: &[Vec<u8>], start: Point, end: Point) -> u64 {
 
     pq.push(start, Reverse(0));
 
-    while !pq.is_empty() {
-        let (u, _) = pq.pop().unwrap();
-        if u == end { return dist[&u]; }
-        let neighbours = get_neighbors(u, width, height);
-        for v in neighbours {
+    while let Some((u, _)) = pq.pop() {
+        if u == end { break; }
+        for v in neighbours(u, width, height) {
             let alt = dist[&u] + u64::from(graph[v.0][v.1]);
             if alt < dist[&v] {
                 dist.insert(v, alt);

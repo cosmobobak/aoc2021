@@ -54,26 +54,8 @@ fn run(day: usize, task: impl FnOnce()) -> u128 {
 }
 
 const TASKS: [fn(); 19] = [
-    task01,
-    task02,
-    task03,
-    task04,
-    task05,
-    task06,
-    task07,
-    task08,
-    task09,
-    task10,
-    task11,
-    task12,
-    task13,
-    task14,
-    task15,
-    task16,
-    task17,
-    task18,
-    task19,
-];
+    task01, task02, task03, task04, task05, task06, task07, task08, task09, task10, task11,
+    task12, task13, task14, task15, task16, task17, task18, task19 ];
 
 fn main() {
     let mut timings = [0; TASKS.len()];

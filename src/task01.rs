@@ -5,7 +5,7 @@ pub fn task01() {
     let input = get_task(1);
     let nums = input
         .lines()
-        .map(|x| x.parse::<i32>().unwrap())
+        .map(|x| x.parse::<i32>().unwrap_or_else(|_| panic!("Failed to parse number: {}", x)))
         .collect::<Vec<i32>>();
 
     // task 1
